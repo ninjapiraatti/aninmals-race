@@ -1,7 +1,11 @@
 package aninmals
 
 import (
+	"fmt"
 	"math/rand"
+	"time"
+
+	"github.com/go-redis/redis"
 )
 
 var (
@@ -10,18 +14,31 @@ var (
 )
 
 type Aninmal struct {
-	Name     string
-	Progress int
-	Color    string
+	Name       string
+	Progress   int
+	Color      string
+	LatestStep string
 }
 
 func generateColor() string {
 	return "\033[31m" // Red
 }
 
-func (a *Aninmal) Race() {
+func (a *Aninmal) Race(rdb *redis.Client) {
+	status := rdb.Set(a.Name, a.Progress, 600*time.Second)
+	if status.Err() != nil {
+		fmt.Println("Redis error:", status)
+	}
+	val, err := rdb.Get(a.Name).Result()
+	if err != nil {
+		panic(err)
+	}
 	advance := rand.Intn(3)
+	if a.Progress > 1 {
+		advance -= 1
+	}
 	a.Progress += advance
+	a.LatestStep = val
 }
 
 func Create() Aninmal {
