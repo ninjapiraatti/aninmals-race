@@ -27,7 +27,7 @@ func DisplayRace(ctx context.Context, aninmals []aninmals.Aninmal) {
 
 			for _, a := range aninmals {
 				progressBar := strings.Repeat("#", a.Progress) + strings.Repeat(".", raceLength-a.Progress)
-				fmt.Printf("%s%-30s %-2s [%-35s]\033[0m\n", a.Color, a.Name, a.LatestStep, progressBar)
+				fmt.Printf("%s%-30s %-2s [%-35s]\033[0m\n", a.Color, a.Name, a.ProgressFromRedis, progressBar)
 			}
 		case <-ctx.Done():
 			return

@@ -14,10 +14,10 @@ var (
 )
 
 type Aninmal struct {
-	Name       string
-	Progress   int
-	Color      string
-	LatestStep string
+	Name              string
+	Progress          int
+	Color             string
+	ProgressFromRedis string
 }
 
 var colors = []string{
@@ -43,7 +43,7 @@ func (a *Aninmal) Race(rdb *redis.Client) {
 		advance -= 1
 	}
 	a.Progress += advance
-	a.LatestStep = val
+	a.ProgressFromRedis = val
 }
 
 func Create() Aninmal {
