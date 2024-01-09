@@ -20,8 +20,13 @@ type Aninmal struct {
 	LatestStep string
 }
 
-func generateColor() string {
-	return "\033[31m" // Red
+var colors = []string{
+	"\033[31m", // Red
+	"\033[32m", // Green
+	"\033[33m", // Yellow
+	"\033[34m", // Blue
+	"\033[35m", // Magenta
+	"\033[36m", // Cyan
 }
 
 func (a *Aninmal) Race(rdb *redis.Client) {
@@ -47,7 +52,7 @@ func Create() Aninmal {
 	aninmal := Aninmal{
 		Name:     adjective + " " + name,
 		Progress: 0,
-		Color:    generateColor(),
+		Color:    colors[rand.Intn(len(colors))],
 	}
 	return aninmal
 }
