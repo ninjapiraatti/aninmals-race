@@ -39,9 +39,9 @@ func main() {
 	println("\n\n\n")
 
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     "localhost:6382", // or the address of your Redis server
-		Password: "",               // no password set
-		DB:       0,                // use default DB
+		Addr:     "localhost:6382",
+		Password: "",
+		DB:       0,
 	})
 
 	uniqueAninmals := make([]aninmals.Aninmal, numberOfContestants)
